@@ -1,6 +1,7 @@
 ### Get Users, Rosters and Records of many leagues in Sleeper ###
 library(tidyverse)
 library(tidyjson)
+library(httr)
 
 # Leagues
 
