@@ -24,6 +24,7 @@ leagues <- c("597038861834567680", "597041380413464576",
              "597040711145152512", "597041969868361728",
              "597038205220470784", "564943267409571840")
 
+url <- "https://api.sleeper.app/v1/league/"
 
 ############
 # Users
@@ -85,7 +86,7 @@ all_rosters <- purrr::map_dfr(leagues, get_rosters)
 
 get_records <- function(leagues){
   records <- httr::GET(paste0(url,leagues,"/rosters"))
-  jsontext <- content(settings, as = "text")
+  jsontext <- content(records, as = "text")
   
   records_df <- jsontext %>%
     gather_array %>% 
@@ -110,4 +111,4 @@ get_records <- function(leagues){
   return(records_df)
 }
 
-all_rosters <- purrr::map_dfr(leagues, get_records)
+all_records <- purrr::map_dfr(leagues, get_records)

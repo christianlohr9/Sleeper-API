@@ -4,25 +4,26 @@ library(httr)
 
 # Leagues
 
-# id_bud <- 597034773214453760
-# id_burger <- 
-# id_cheetos <- 597043384380612608
-# id_chicken <- 597040711145152512 
-# id_chili <- 597041969868361728
-# id_cupcakes <- 597041707346874368
-# id_hotdog <- 597040014550945792
-# id_nacho <- 597041380413464576
-# id_pepper <- 597038205220470784
-# id_pizza <- 597038861834567680
-# id_twinkie <- 
-# id_burrito <- 564943267409571840
+# Pizza Pals <- 597038861834567680
+# Nacho Nascher <- 597041380413464576
+# Hot Dog Dudes <- 597040014550945792
+# Bud Light Buddies <- 597034773214453760
+# Codeword Cheetos <- 597043384380612608
+# Cupcake Comrades <- 597041707346874368
+# Chicken Wings Channel <- 597040711145152512 
+# Chili Chicks <- 597041969868361728
+# Dr. Pepper Division <- 597038205220470784 
+# Burrito Barbaren <- 597037608735920128
+# Burger Boys <- 597040374485143552
+# Twinkie Town <- 597038475849555968
 
 weeks <- 1:16
 leagues <- c("597038861834567680", "597041380413464576",
              "597040014550945792", "597034773214453760",
              "597043384380612608", "597041707346874368",
              "597040711145152512", "597041969868361728",
-             "597038205220470784", "564943267409571840")
+             "597038205220470784", "597037608735920128",
+             "597040374485143552", "597038475849555968")
 
 url <- "https://api.sleeper.app/v1/league/"
 
@@ -43,19 +44,19 @@ get_matchups <- function(leagues,week){
     spread_values(roster_id = jstring("roster_id"),
                   points = jnumber("points"),
                   matchup_id = jstring("matchup_id")
-    ) %>% 
-    enter_object("starters") %>%   # we need starters
-    gather_array
+    ) #%>% 
+    # enter_object("starters") %>%   #1 this code is needed if we want starters
+    # gather_array
   
   # Clean-Up:
   
   matchups_df <- as.data.frame(matchups_df) %>%
     select(roster_id, points, matchup_id, ..JSON) %>% 
-    rename(starters = ..JSON)
-  matchups_df$starters <- unlist(matchups_df$starters)
-  matchups_df$wk <- week
-  matchups_df$league_id <- as.character(leagues)
-  
+    #rename(starters = ..JSON) %>% #1 this code is needed if we want starters
+    mutate(wk = week,
+           league_id = as.character(leagues))
+  #matchups_df$starters <- unlist(matchups_df$starters) #1 this code is needed if we want starters
+
   # we use rosters for matching the roster_id with the owner_id
   # afterwards we need users to match the names to the owner_id
   ## to do: master data table with owner_, roster_, leage_id and names

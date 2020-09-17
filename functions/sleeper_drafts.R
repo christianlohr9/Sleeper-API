@@ -20,6 +20,7 @@ id_cupcakes <- "597041707346874368"
 id_chili <- "597041969868361728"
 #upsidebowl_ids <- list(c(id_pizza,id_nacho,id_hotdog))
 
+url <- "https://api.sleeper.app/v1/league/"
 
 ###################################
 # Draft
